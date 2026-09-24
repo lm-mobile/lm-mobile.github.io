@@ -5,7 +5,9 @@ in Chrome, Brave, Edge, Samsung Internet or Safari, with no userscript manager.
 A bookmark loads the official, unmodified script into the GeoGuessr page; a tiny
 free relay lets it reach the Learnable Meta server.
 
-**Guide website (with pictures and videos):** https://lerbernard.github.io/learnable-meta-mobile/
+**Guide website:** the `docs` folder, published as a static site (see `SITE_URL`
+in `worker.js` for the current address). Pages: home, Android, iPhone and iPad,
+Play, Help, Host your own.
 
 **Relay:** https://lm-relay.overlaisupport.workers.dev (the address the bookmark uses)
 
