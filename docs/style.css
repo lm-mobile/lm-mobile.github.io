@@ -88,8 +88,8 @@ details summary { cursor: pointer; font-weight: 700; }
 
 /* hero (home) */
 .hero { display: grid; grid-template-columns: 1.2fr .8fr; gap: 18px; align-items: center; margin: 6px 0 20px; }
-.hero img { width: 100%; max-width: 300px; margin: 0 auto; display: block; border-radius: 22px; box-shadow: 0 25px 60px rgba(0, 0, 0, .55), var(--glow); transform: rotate(3deg); }
-@media (max-width: 640px) { .hero { grid-template-columns: 1fr; } .hero img { max-width: 240px; transform: rotate(2deg); } }
+.hero img { width: 100%; max-width: 300px; margin: 0 auto; display: block; border-radius: 22px; box-shadow: 0 25px 60px rgba(0, 0, 0, .55), var(--glow); }
+@media (max-width: 640px) { .hero { grid-template-columns: 1fr; } .hero img { max-width: 240px; } }
 
 /* the big reminder */
 .remember {
@@ -97,7 +97,6 @@ details summary { cursor: pointer; font-weight: 700; }
   background: linear-gradient(135deg, #f97316, #ec4899); box-shadow: 0 12px 40px rgba(236, 72, 153, .35);
   font-weight: 700; font-size: 1.05rem;
 }
-.remember .icon { flex: none; width: 46px; height: 46px; border-radius: 50%; background: rgba(255, 255, 255, .2); display: flex; align-items: center; justify-content: center; font-size: 24px; }
 .remember b { font-weight: 900; }
 
 /* step-by-step blocks */
@@ -125,17 +124,9 @@ figcaption { color: var(--muted); font-size: 13.5px; margin-top: 8px; }
 .card { display: block; border-radius: 18px; padding: 22px 18px; text-decoration: none; color: #fff; background: linear-gradient(135deg, var(--purple), var(--violet)); box-shadow: 0 14px 40px rgba(0, 0, 0, .4); transition: transform .15s ease; }
 .card.android { background: linear-gradient(135deg, #22c55e, #0f766e); }
 .card.iphone { background: linear-gradient(135deg, #3b82f6, #4f46e5); }
-.card:hover { transform: translateY(-3px) scale(1.01); }
-.card .big-icon { font-size: 30px; display: block; margin-bottom: 6px; }
+.card:hover { transform: translateY(-2px); }
 .card b { display: block; font-size: 1.2rem; margin-bottom: 4px; font-weight: 900; }
 .card span { color: rgba(255, 255, 255, .88); font-size: 14.5px; }
 .next { margin-top: 18px; }
 footer { color: var(--muted); font-size: 14px; text-align: center; margin-top: 28px; }
 
-@media (prefers-reduced-motion: no-preference) {
-  main > * { animation: rise .5s ease both; }
-  main > *:nth-child(2) { animation-delay: .05s; }
-  main > *:nth-child(3) { animation-delay: .1s; }
-  main > *:nth-child(4) { animation-delay: .15s; }
-  @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
-}
