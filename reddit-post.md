@@ -13,7 +13,9 @@ How it works: you save one bookmark, named LM, once. In a game you tap it and it
 What to know:
 - Works in Chrome, Brave, Edge, Samsung Internet and other Chromium-based browsers, on Android and on iPhone and iPad. It does not work in Safari.
 - It works on the GeoGuessr website only, not in the GeoGuessr app.
-- Every new map, tap the bookmark again.
+- Every time you switch map, tap the address bar, type LM and tap the LM bookmark again.
+- The small LM button in the bottom-right corner tells you the script is on.
+- Tap that LM button to change the size of the clue popup or to hide it.
 - Firefox users do not need this: Firefox on Android runs Tampermonkey, so the normal Learnable Meta install works there.
 
 Safety: the bookmark loads the unmodified script straight from the Learnable Meta site. A tiny relay in between only forwards the script's requests, stores nothing, never sees your GeoGuessr login, and refuses to pass on Learnable Meta account tokens. The code is open source: https://github.com/lm-mobile/lm-mobile.github.io
