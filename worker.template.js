@@ -6,6 +6,7 @@
  * 3. Relays learnablemeta.com/api/userscript/* with CORS headers so a plain
  *    page script running on geoguessr.com is allowed to call it.
  *
+ * Deploys automatically from GitHub (Workers Builds) on every push to main.
  * Deploy by hand: Cloudflare dashboard -> Workers & Pages -> your worker
  *                 -> Edit code -> replace everything with this file -> Deploy.
  * Deploy from GitHub: Workers & Pages -> Create -> Import a repository, pick
