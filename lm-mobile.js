@@ -29,7 +29,7 @@
   var API_ORIGIN = 'https://learnablemeta.com';
   var SCRIPT_URL = 'https://userscript.learnablemeta.com/geometa.user.js';
   var STORE_PREFIX = 'lmMobile:';
-  var LOADER_VERSION = '1.1.0';
+  var LOADER_VERSION = '1.2.0';
   var GAME_API = /geoguessr\.com\/api\/v3\/(games|challenges)(\/|$)/;
 
   if (!/(^|\.)geoguessr\.com$/.test(location.hostname)) {
@@ -107,12 +107,9 @@
       'position:fixed;right:12px;bottom:64px;z-index:2147483646;min-width:220px;max-width:90vw;padding:8px;border-radius:10px;' +
       'background:#1c1836;color:#fff;font:14px system-ui,sans-serif;box-shadow:0 4px 16px rgba(0,0,0,.5)');
     menuPanel.appendChild(el('div', 'padding:4px 8px 8px;font-weight:700;opacity:.8', 'Learnable Meta (mobile loader ' + LOADER_VERSION + ')'));
-    state.menu.forEach(function (item) {
-      menuPanel.appendChild(menuRow(item.caption, '#fff', function () {
-        toggleMenu();
-        try { item.fn(); } catch (e) { console.error('LM mobile: menu command failed', e); }
-      }));
-    });
+    // The script's own menu commands (Reset Meta Window Layout) are kept in state.menu but not shown.
+    menuPanel.appendChild(menuRow(prefs.hidden ? 'Show clue window' : 'Hide clue window', '#fff', function () { toggleMenu(); toggleHidden(); }));
+    menuPanel.appendChild(menuRow('Clue window size: ' + prefs.size + ' (tap to change)', '#fff', function () { toggleMenu(); cycleSize(); }));
     menuPanel.appendChild(menuRow('Check game now', '#fff', function () { toggleMenu(); syncGame('manual'); notify('Checking current game...'); }));
     menuPanel.appendChild(menuRow('Diagnostics', '#fff', function () { toggleMenu(); showDiagnostics(); }));
     menuPanel.appendChild(menuRow('Reload page (script stops until you tap the bookmark again)', '#9ad', function () { location.reload(); }));
@@ -369,13 +366,41 @@
   window.addEventListener('urlchange', onUrlChange);
   window.addEventListener('popstate', onUrlChange);
 
-  /* ---------- small-screen tweak for the meta window ---------- */
+  /* ---------- clue window preferences: hide/show and size ---------- */
 
-  window.GM_addStyle(
-    '@media (max-width: 700px) {' +
-    ' .geometa-container { width: min(92vw, 500px) !important; left: 4vw !important; top: 4.5rem !important; max-height: 55vh !important; font-size: 15px !important; }' +
-    '}'
-  );
+  var prefs = { hidden: false, size: 'medium' };
+  try { prefs = Object.assign(prefs, JSON.parse(localStorage.getItem(STORE_PREFIX + 'ui') || '{}')); } catch (e) { /* ignore */ }
+  function savePrefs() { try { localStorage.setItem(STORE_PREFIX + 'ui', JSON.stringify(prefs)); } catch (e) { /* ignore */ } }
+
+  var SIZES = {
+    small: 'width: 62vw; max-height: 38vh; font-size: 13px;',
+    medium: 'width: 92vw; max-height: 55vh; font-size: 15px;',
+    large: 'width: 100vw; left: 0; max-height: 82vh; font-size: 16px;'
+  };
+  var uiStyle = document.createElement('style');
+  (document.head || document.documentElement).appendChild(uiStyle);
+  function applyUi() {
+    // The [class][class] repeats raise specificity above the script's own two-class rule without
+    // !important, so the window stays resizable: dragging the corner writes an inline size that wins.
+    uiStyle.textContent =
+      '@media (max-width: 700px) { div.geometa-container[class][class] { ' + SIZES[prefs.size] + ' left: 4vw; top: 4.5rem; resize: both; touch-action: none; } }' +
+      ' div.geometa-container .geometa-footer { user-select: none; }' +
+      (prefs.hidden ? ' div.geometa-container[class][class] { display: none !important; }' : '');
+  }
+  function toggleHidden() {
+    prefs.hidden = !prefs.hidden; savePrefs(); applyUi();
+    notify(prefs.hidden ? 'Clue window hidden. Use the LM menu to show it again.' : 'Clue window shown.');
+  }
+  function cycleSize() {
+    var order = ['small', 'medium', 'large'];
+    prefs.size = order[(order.indexOf(prefs.size) + 1) % order.length]; savePrefs(); applyUi();
+    document.querySelectorAll('.geometa-container').forEach(function (el) { el.style.width = ''; el.style.height = ''; });
+    notify('Clue window size: ' + prefs.size);
+  }
+  state.toggleHidden = toggleHidden;
+  state.cycleSize = cycleSize;
+  state.prefs = prefs;
+  applyUi();
 
   /* ---------- fetch and run the real userscript ---------- */
 
