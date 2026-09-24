@@ -5,8 +5,8 @@ in Chrome, Brave, Edge, Samsung Internet or Safari, with no userscript manager.
 A bookmark loads the official, unmodified script into the GeoGuessr page; a tiny
 free relay lets it reach the Learnable Meta server.
 
-**Guide website:** the `docs` folder, published as a static site (see `SITE_URL`
-in `worker.js` for the current address). Pages: home, Android, iPhone and iPad,
+**Guide website:** https://lm-mobile.github.io/ (the `docs` folder, published by GitHub Pages)
+Pages: home, Android, iPhone and iPad,
 Play, Help, Host your own.
 
 **Relay:** https://lm-relay.overlaisupport.workers.dev (the address the bookmark uses)
@@ -46,7 +46,8 @@ reload.
 | `lm-mobile.js` | The loader source. Embedded into `worker.js` by `build.sh`. |
 | `worker.template.js` | Worker source with the `/*__LOADER__*/` placeholder. |
 | `build.sh` | Rebuilds `worker.js` after editing the loader or the template. |
-| `docs/index.html`, `docs/img/` | The guide website, served by GitHub Pages from the `docs` folder. |
+| `docs/` | The guide website (one HTML page per topic, `config.js`, `style.css`, `img/`), served by GitHub Pages. |
+| `LICENSE` | MIT. The Learnable Meta script itself is not covered; it belongs to its authors. |
 | `wrangler.jsonc` | Lets `npx wrangler deploy` and Cloudflare's GitHub integration deploy the worker. |
 | `dev-server.mjs` | Runs `worker.js` locally for testing: `node dev-server.mjs 8787`. |
 | `bookmarklet.txt` | The bookmark link, for setting it up by hand. |
@@ -60,9 +61,8 @@ reload.
    Or connect the fork: Workers & Pages, Create, Import a repository. Cloudflare
    then deploys on every push using `wrangler.jsonc`.
    Or from a terminal: `npx wrangler login` then `npx wrangler deploy`.
-3. **Point things at each other:** change the `lm-relay` meta tag at the top of
-   `docs/index.html` to your relay address, and `SITE_URL` at the top of
-   `worker.template.js` to your Pages address, then run `bash build.sh`.
+3. **Point things at each other:** set `relay` and `repo` in `docs/config.js`,
+   and `SITE_URL` at the top of `worker.template.js`, then run `bash build.sh`.
 4. **Website:** in the fork's Settings, Pages, choose "Deploy from a branch",
    branch `main`, folder `/docs`.
 
@@ -90,5 +90,8 @@ Tap the round **LM** button on the GeoGuessr page:
 - iPhone and iPad: Safari plus the Tampermonkey app (paid) or the free
   Userscripts app.
 
-Not affiliated with GeoGuessr or Learnable Meta. The script belongs to the
-Learnable Meta team and is loaded unmodified from their official address.
+## Licence
+
+MIT, see `LICENSE`. Not affiliated with GeoGuessr or Learnable Meta. The script
+belongs to the Learnable Meta team and is loaded unmodified from their official
+address.

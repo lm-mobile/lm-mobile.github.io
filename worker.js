@@ -20,7 +20,7 @@
  * only on a relay that is yours alone.
  */
 
-const SITE_URL = 'https://lm-mobile-guide.github.io/';
+const SITE_URL = 'https://lm-mobile.github.io/';
 const UPSTREAM = 'https://learnablemeta.com';
 const ALLOWED_ORIGIN = /^https:\/\/([a-z0-9-]+\.)*geoguessr\.com$/i;
 const FORWARD_AUTHORIZATION = false;
