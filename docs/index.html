@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Learnable Meta Mobile</title>
-<meta name="description" content="Run the GeoGuessr Learnable Meta script on any phone, tablet or computer browser without a userscript manager. Step-by-step guides with screenshots.">
+<meta name="description" content="See the Learnable Meta clue after every GeoGuessr guess on your phone or tablet, in your normal browser. No app, no extension.">
 <link rel="icon" href="favicon.svg">
 <link rel="stylesheet" href="style.css">
 </head>
@@ -15,45 +15,41 @@
     <a href="index.html">Home</a>
     <a href="android.html">Android</a>
     <a href="iphone.html">iPhone &amp; iPad</a>
-    <a href="computer.html">Computer</a>
     <a href="play.html">Play</a>
     <a href="help.html">Help</a>
-    <a href="host.html">Host your own</a>
   </nav>
 </header>
 <main>
-  <h1>Learnable Meta on any browser</h1>
-  <p class="sub">Play GeoGuessr's Learnable Meta maps on a phone, tablet or computer in Chrome, Brave, Edge, Samsung Internet or Safari, with no userscript manager. A bookmark you tap once per game loads the official, unmodified Learnable Meta script.</p>
+  <h1>Learnable Meta on your phone</h1>
+  <p class="sub">See the Learnable Meta clue after every GeoGuessr guess, on a phone or tablet, in your normal browser. No app to install. No extension.</p>
 
   <section>
-    <h2>Relay status</h2>
+    <h2>How it works</h2>
+    <ol>
+      <li>You save one bookmark, named <b>LM</b>. Takes two minutes, once.</li>
+      <li>When you play, you tap that bookmark once. It loads the real Learnable Meta script into the game.</li>
+      <li>After each guess, the clue for that place appears.</li>
+    </ol>
+    <p class="hint">Works in Chrome, Brave, Edge, Samsung Internet and Safari. It does not work in the GeoGuessr app, only on the website.</p>
+  </section>
+
+  <h2>Pick your phone</h2>
+  <div class="cards">
+    <a class="card" href="android.html"><b>Android</b><span>Chrome, Brave, Edge or Samsung Internet</span></a>
+    <a class="card" href="iphone.html"><b>iPhone or iPad</b><span>Safari</span></a>
+  </div>
+
+  <p class="next"><a class="btn big secondary" href="play.html">Already have the bookmark? Go to Play</a></p>
+
+  <section>
+    <h2>Status</h2>
     <p data-relay-status>Checking...</p>
   </section>
 
-  <h2>Pick your device</h2>
-  <div class="cards">
-    <a class="card" href="android.html"><b>Android phone or tablet</b><span>Chrome, Brave, Edge or Samsung Internet. About five taps, once.</span></a>
-    <a class="card" href="iphone.html"><b>iPhone or iPad</b><span>Safari, Chrome or Brave. Plus an optional two-tap Share menu shortcut.</span></a>
-    <a class="card" href="computer.html"><b>Windows, Mac or Linux</b><span>Drag one button to the bookmarks bar.</span></a>
-    <a class="card" href="play.html"><b>Then: play</b><span>One tap per game. Pictures of what you should see.</span></a>
-  </div>
-
-  <section style="margin-top:16px">
-    <h2>How it works</h2>
-    <ul>
-      <li>Phone browsers cannot install Tampermonkey, so the normal Learnable Meta install does not work there.</li>
-      <li>A <b>bookmarklet</b> is a bookmark that runs a little JavaScript when you tap it. Ours loads the real Learnable Meta script into the GeoGuessr page.</li>
-      <li>A small free <b>relay</b> forwards the script's requests to the Learnable Meta server, which otherwise refuses calls from a plain web page.</li>
-      <li>Nothing is installed and nothing on your account changes. The GeoGuessr app is not supported, only the website in a browser.</li>
-    </ul>
-  </section>
-
-  <section>
-    <h2>Need help or want your own copy?</h2>
-    <p><a href="help.html">Troubleshooting</a> covers the LM button, "Check game now" and the Diagnostics panel. <a href="host.html">Host your own</a> explains the free Cloudflare relay and GitHub Pages setup, with the source code on <a data-repo href="#">GitHub</a>.</p>
-  </section>
-
-  <footer>Not affiliated with GeoGuessr or Learnable Meta. The script itself is by the <a href="https://learnablemeta.com" target="_blank" rel="noopener">Learnable Meta</a> team and is loaded unmodified from their official address.</footer>
+  <footer>
+    Not affiliated with GeoGuessr or Learnable Meta. The script is by the <a href="https://learnablemeta.com" target="_blank" rel="noopener">Learnable Meta</a> team and is loaded unchanged from their site.
+    <br><a href="host.html">Host your own copy</a>
+  </footer>
 </main>
 <script src="config.js"></script>
 <script src="site.js"></script>

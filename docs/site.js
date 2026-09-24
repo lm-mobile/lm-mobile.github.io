@@ -34,6 +34,7 @@
   });
 
   all('a[data-repo]').forEach(function (a) { if (repo) a.href = repo; });
+  all('[data-repo-only]').forEach(function (el) { if (!repo) el.style.display = 'none'; });
   all('[data-relay-url]').forEach(function (el) { el.textContent = relay; });
 
   var status = document.querySelector('[data-relay-status]');
