@@ -1,13 +1,13 @@
 # Learnable Meta on any browser
 
 Run the GeoGuessr **Learnable Meta** userscript on a phone, tablet or computer
-in Chrome, Brave, Edge, Samsung Internet or Safari, with no userscript manager.
+in Chrome, Brave, Edge or Samsung Internet on Android, with no userscript manager.
+iPhone and iPad are not supported.
 A bookmark loads the official, unmodified script into the GeoGuessr page; a tiny
 free relay lets it reach the Learnable Meta server.
 
 **Guide website:** https://lm-mobile.github.io/ (the `docs` folder, published by GitHub Pages)
-Pages: home, Android, iPhone and iPad,
-Play, Help, Host your own.
+Pages: home, Android, Play, Help.
 
 **Relay:** https://lm-relay.overlaisupport.workers.dev (the address the bookmark uses)
 
@@ -17,7 +17,6 @@ Play, Help, Host your own.
 | --- | --- | --- |
 | Once per device | Open the guide, tap "Copy bookmark link", save it as a bookmark named LM | About five taps on a phone, one drag on a computer |
 | Each play session | On geoguessr.com, type LM in the address bar and tap the bookmark | One tap |
-| iPhone or iPad (optional) | Share menu, then the Learnable Meta shortcut | Two taps |
 
 It cannot be less than this. No browser lets a web page add a bookmark for the
 user, and without an extension the browser forgets the script after a full page
