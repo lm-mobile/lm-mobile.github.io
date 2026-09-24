@@ -1,8 +1,8 @@
 # Learnable Meta on any browser
 
 Run the GeoGuessr **Learnable Meta** userscript on a phone, tablet or computer
-in Chrome, Brave, Edge or Samsung Internet on Android, with no userscript manager.
-iPhone and iPad are not supported.
+in Chrome, Brave, Edge, Samsung Internet or any other Chromium-based browser, on
+Android, iPhone and iPad, with no userscript manager. Safari is not supported.
 A bookmark loads the official, unmodified script into the GeoGuessr page; a tiny
 free relay lets it reach the Learnable Meta server.
 
