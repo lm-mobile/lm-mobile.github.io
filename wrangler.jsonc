@@ -1,0 +1,9 @@
+// Optional: lets you deploy from the command line instead of the dashboard.
+//   npx wrangler login     (opens a browser window, you log in yourself)
+//   npx wrangler deploy    (prints the https://lm-relay.<you>.workers.dev address)
+{
+  "name": "lm-relay",
+  "main": "worker.js",
+  "compatibility_date": "2026-09-01",
+  "workers_dev": true
+}
