@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Android setup - Learnable Meta Mobile</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="index.html">Learnable Meta Mobile</a>
+  <nav class="menu">
+    <a href="index.html">Home</a>
+    <a href="android.html">Android</a>
+    <a href="iphone.html">iPhone &amp; iPad</a>
+    <a href="computer.html">Computer</a>
+    <a href="play.html">Play</a>
+    <a href="help.html">Help</a>
+    <a href="host.html">Host your own</a>
+  </nav>
+</header>
+<main>
+  <h1>Android: Chrome or Brave <span class="tag">once per device</span></h1>
+  <p class="sub">Works the same in Edge and Samsung Internet. You add one bookmark, named LM, whose address is a small piece of code. Do these steps on the phone or tablet itself.</p>
+
+  <section>
+    <div class="step">
+      <div class="num">1</div>
+      <div>
+        <h3>Copy the bookmark link</h3>
+        <p>Tap the button. It says "Copied" when done.</p>
+        <p><button class="btn" data-copy="bookmarklet">Copy bookmark link</button> <span class="ok"></span></p>
+        <details><summary>Did not copy? Show the link</summary><textarea readonly data-fill="bookmarklet"></textarea></details>
+        <figure class="phone">
+          <img src="img/guide-copy.png" alt="This page on a phone after tapping Copy bookmark link; it shows Copied" loading="lazy">
+          <figcaption>After tapping, the word Copied appears next to the button.</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="num">2</div>
+      <div>
+        <h3>Bookmark this page</h3>
+        <p>Tap the three dots at the top right, then the star.</p>
+        <div class="placeholder"><b>Phone screenshot slot:</b> Chrome's three-dot menu with the star highlighted.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="num">3</div>
+      <div>
+        <h3>Open the bookmark for editing</h3>
+        <p>Three dots, then <b>Bookmarks</b>. Find the bookmark you just made, tap the three dots next to it, then <b>Edit</b>.</p>
+        <div class="placeholder"><b>Phone screenshot slot:</b> the Bookmarks list with the Edit menu open.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="num">4</div>
+      <div>
+        <h3>Rename it and paste the link</h3>
+        <p>Set the name to <b>LM</b>. In the address field, delete everything, long-press and <b>Paste</b>. The address must start with <code>javascript:</code>. Tap the back arrow to save.</p>
+        <div class="placeholder"><b>Phone screenshot slot:</b> the Edit bookmark screen with name LM and the pasted address.</div>
+        <p class="hint">If Chrome removes the <code>javascript:</code> part when you paste, create the bookmark in Chrome on a computer that is signed in to the same Google account instead (see <a href="computer.html">Computer</a>). It syncs to the phone within a minute.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="num">5</div>
+      <div>
+        <h3>Test it</h3>
+        <p>Open <b>www.geoguessr.com</b>, tap the address bar, type <b>LM</b>, and tap the LM bookmark in the suggestions (it has a star next to it). Do not open it from the Bookmarks list: on Android the bookmark only works from the address bar.</p>
+        <div class="placeholder"><b>Phone screenshot slot:</b> the address bar with LM typed and the starred suggestion.</div>
+        <p>A message "Learnable Meta 0.96 loaded" appears at the bottom, plus a round LM button. Now go to <a href="play.html">Play</a>.</p>
+        <figure class="phone">
+          <img src="img/lm-button.png" alt="GeoGuessr with the Learnable Meta loaded message and the LM button" loading="lazy">
+          <figcaption>What a successful tap looks like.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <p class="hint">Prefer a written guide with more pictures of Chrome's own screens? <a href="https://www.labnol.org/software/google-chrome-bookmarklets/27894" target="_blank" rel="noopener">How to use bookmarklets in Chrome for mobile</a>.</p>
+
+  <p class="next"><a class="btn big" href="play.html">Next: Play</a></p>
+</main>
+<script src="config.js"></script>
+<script src="site.js"></script>
+</body>
+</html>

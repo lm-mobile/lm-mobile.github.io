@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Help - Learnable Meta Mobile</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="index.html">Learnable Meta Mobile</a>
+  <nav class="menu">
+    <a href="index.html">Home</a>
+    <a href="android.html">Android</a>
+    <a href="iphone.html">iPhone &amp; iPad</a>
+    <a href="computer.html">Computer</a>
+    <a href="play.html">Play</a>
+    <a href="help.html">Help</a>
+    <a href="host.html">Host your own</a>
+  </nav>
+</header>
+<main>
+  <h1>Troubleshooting</h1>
+  <p class="sub">Most problems are one of these.</p>
+
+  <section>
+    <h2>Common problems</h2>
+    <ul>
+      <li><b>"Open geoguessr.com first"</b>: you tapped the bookmark on another site. Open the game first.</li>
+      <li><b>Nothing happens when tapping the bookmark on Android</b>: start it from the address bar, not from the Bookmarks list. Type LM and tap the starred suggestion.</li>
+      <li><b>The bookmark opens a blank page or a search</b>: the address was saved without the <code>javascript:</code> part. Edit it and paste the link again, or create it on a computer (see <a href="computer.html">Computer</a>).</li>
+      <li><b>"Learnable Meta failed to load"</b>: the relay or the Learnable Meta site could not be reached. Check the relay status on the <a href="index.html">home page</a> and try again.</li>
+      <li><b>Loaded, but no meta after a guess</b>: use the LM button, below.</li>
+      <li><b>Map not supported</b>: the script only shows metas on Learnable Meta maps. Pick one from <a href="https://learnablemeta.com/maps" target="_blank" rel="noopener">learnablemeta.com/maps</a>.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>The LM button</h2>
+    <p>The round LM button at the bottom right opens a small menu.</p>
+    <div class="row">
+      <figure class="phone">
+        <img src="img/lm-menu.png" alt="The LM button menu with Reset Meta Window Layout, Check game now, Diagnostics and Reload page" loading="lazy">
+        <figcaption>The menu.</figcaption>
+      </figure>
+      <figure class="phone">
+        <img src="img/diagnostics.png" alt="The diagnostics panel with technical details and a Copy button" loading="lazy">
+        <figcaption>The Diagnostics panel.</figcaption>
+      </figure>
+    </div>
+    <ul>
+      <li><b>Reset Meta Window Layout</b> puts the meta window back in its default place if you dragged it off screen.</li>
+      <li><b>Check game now</b> re-reads the current game and shows the meta window if a round has just ended.</li>
+      <li><b>Diagnostics</b> shows what the script saw: the game, whether the result screen was detected, recent events and errors. Tap <b>Copy</b> and paste the text to whoever helps you; it contains no passwords or tokens.</li>
+      <li><b>Reload page</b> reloads GeoGuessr. The script stops until you tap the bookmark again.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Officially supported alternatives</h2>
+    <ul>
+      <li>Android: Firefox for Android plus the Tampermonkey add-on, as in Learnable Meta's own <a href="https://learnablemeta.com/docs/getting-started/android" target="_blank" rel="noopener">Android guide</a>.</li>
+      <li>iPhone and iPad: Safari plus the Tampermonkey app (paid) or the free Userscripts app, as in their <a href="https://learnablemeta.com/docs/getting-started/ios" target="_blank" rel="noopener">iOS guide</a>.</li>
+    </ul>
+  </section>
+</main>
+<script src="config.js"></script>
+<script src="site.js"></script>
+</body>
+</html>

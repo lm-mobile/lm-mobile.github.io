@@ -4,225 +4,57 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Learnable Meta Mobile</title>
-<meta name="description" content="Run the GeoGuessr Learnable Meta script on any phone, tablet or computer browser without a userscript manager. Step-by-step guide with pictures and videos.">
-<!-- The relay this guide hands out. Fork the project? Change this one line to your own worker address. -->
-<meta name="lm-relay" content="https://lm-relay.overlaisupport.workers.dev">
-<meta name="lm-repo" content="https://github.com/Lerbernard/learnable-meta-mobile">
-<style>
-  :root { color-scheme: dark; }
-  * { box-sizing: border-box; }
-  body { margin: 0; font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background: #12101f; color: #f2f0fa; }
-  main { max-width: 760px; margin: 0 auto; padding: 24px 16px 64px; }
-  h1 { font-size: 1.8rem; margin: 0 0 6px; line-height: 1.2; }
-  h2 { font-size: 1.25rem; margin: 0 0 10px; }
-  h3 { font-size: 1.05rem; margin: 18px 0 6px; }
-  p { margin: 8px 0; }
-  .sub { color: #b7b2cc; margin: 0 0 18px; }
-  section { background: #1c1836; border-radius: 14px; padding: 18px 16px; margin: 0 0 16px; }
-  ol, ul { padding-left: 22px; margin: 8px 0; }
-  li { margin: 6px 0; }
-  a { color: #b9a7ff; }
-  .btn { display: inline-block; padding: 12px 18px; border-radius: 10px; background: #7c5cff; color: #fff; font-weight: 700; text-decoration: none; border: 0; font-size: 16px; cursor: pointer; }
-  .btn.secondary { background: #2d2850; }
-  .drag { cursor: grab; }
-  code, textarea, pre { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 13px; }
-  code { background: #0f0d1c; padding: 1px 5px; border-radius: 4px; }
-  textarea { width: 100%; min-height: 84px; margin-top: 8px; background: #0f0d1c; color: #dcd8f0; border: 1px solid #3a3560; border-radius: 8px; padding: 8px; }
-  .ok { color: #8ef0b0; }
-  .warn { color: #ffd27a; }
-  .hint { color: #b7b2cc; font-size: 14px; }
-  details summary { cursor: pointer; font-weight: 600; }
-  nav.toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; }
-  nav.toc a { background: #1c1836; padding: 8px 12px; border-radius: 999px; text-decoration: none; font-size: 14px; }
-  figure { margin: 12px 0; }
-  figure img { display: block; max-width: 100%; height: auto; border-radius: 10px; border: 1px solid #3a3560; background: #0f0d1c; }
-  figure.phone img { max-width: 300px; }
-  figure.wide img { width: 100%; }
-  figcaption { color: #b7b2cc; font-size: 13px; margin-top: 6px; }
-  .row { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start; }
-  .row figure { flex: 1 1 260px; }
-  .video { position: relative; width: 100%; padding-top: 56.25%; border-radius: 10px; overflow: hidden; background: #0f0d1c; margin: 10px 0; }
-  .video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-  .tag { display: inline-block; font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: #2d2850; color: #d7ccff; vertical-align: middle; margin-left: 6px; }
-  .steps li { margin: 10px 0; }
-  footer { color: #b7b2cc; font-size: 14px; text-align: center; margin-top: 24px; }
-</style>
+<meta name="description" content="Run the GeoGuessr Learnable Meta script on any phone, tablet or computer browser without a userscript manager. Step-by-step guides with screenshots.">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
+<header class="top">
+  <a class="brand" href="index.html">Learnable Meta Mobile</a>
+  <nav class="menu">
+    <a href="index.html">Home</a>
+    <a href="android.html">Android</a>
+    <a href="iphone.html">iPhone &amp; iPad</a>
+    <a href="computer.html">Computer</a>
+    <a href="play.html">Play</a>
+    <a href="help.html">Help</a>
+    <a href="host.html">Host your own</a>
+  </nav>
+</header>
 <main>
   <h1>Learnable Meta on any browser</h1>
-  <p class="sub">Play GeoGuessr's Learnable Meta maps on a phone, tablet or computer in Chrome, Brave, Edge, Samsung Internet or Safari, with no userscript manager. The official, unmodified Learnable Meta script is loaded by a bookmark you tap once per game.</p>
-
-  <nav class="toc">
-    <a href="#how">How it works</a>
-    <a href="#bookmark">1. Get the bookmark</a>
-    <a href="#play">2. Play</a>
-    <a href="#shortcut">iPhone two-tap option</a>
-    <a href="#help">Troubleshooting</a>
-    <a href="#host">Host your own</a>
-  </nav>
+  <p class="sub">Play GeoGuessr's Learnable Meta maps on a phone, tablet or computer in Chrome, Brave, Edge, Samsung Internet or Safari, with no userscript manager. A bookmark you tap once per game loads the official, unmodified Learnable Meta script.</p>
 
   <section>
     <h2>Relay status</h2>
-    <p id="status">Checking...</p>
+    <p data-relay-status>Checking...</p>
   </section>
 
-  <section id="how">
+  <h2>Pick your device</h2>
+  <div class="cards">
+    <a class="card" href="android.html"><b>Android phone or tablet</b><span>Chrome, Brave, Edge or Samsung Internet. About five taps, once.</span></a>
+    <a class="card" href="iphone.html"><b>iPhone or iPad</b><span>Safari, Chrome or Brave. Plus an optional two-tap Share menu shortcut.</span></a>
+    <a class="card" href="computer.html"><b>Windows, Mac or Linux</b><span>Drag one button to the bookmarks bar.</span></a>
+    <a class="card" href="play.html"><b>Then: play</b><span>One tap per game. Pictures of what you should see.</span></a>
+  </div>
+
+  <section style="margin-top:16px">
     <h2>How it works</h2>
     <ul>
       <li>Phone browsers cannot install Tampermonkey, so the normal Learnable Meta install does not work there.</li>
       <li>A <b>bookmarklet</b> is a bookmark that runs a little JavaScript when you tap it. Ours loads the real Learnable Meta script into the GeoGuessr page.</li>
       <li>A small free <b>relay</b> forwards the script's requests to the Learnable Meta server, which otherwise refuses calls from a plain web page.</li>
-      <li>Nothing is installed. Nothing on your account changes. The GeoGuessr app is not supported, only the website in a browser.</li>
+      <li>Nothing is installed and nothing on your account changes. The GeoGuessr app is not supported, only the website in a browser.</li>
     </ul>
   </section>
 
-  <section id="bookmark">
-    <h2>Step 1: get the bookmark <span class="tag">once per device</span></h2>
-
-    <h3>On a phone or tablet</h3>
-    <ol class="steps">
-      <li>Tap <button id="copy" class="btn">Copy bookmark link</button> <span id="copied" class="ok"></span></li>
-      <li>Bookmark this page: tap the star, or Share and then Add Bookmark.</li>
-      <li>Open your bookmarks, edit the new bookmark, name it <b>LM</b>, and replace its address with the copied link. Save.</li>
-    </ol>
-    <details><summary>Link did not copy? Show it</summary><textarea id="link" readonly></textarea></details>
-
-    <div class="row">
-      <figure class="phone">
-        <img src="img/site-phone.png" alt="This page on a phone, showing the Copy bookmark link button" loading="lazy">
-        <figcaption>This page on a phone. Tap Copy bookmark link first.</figcaption>
-      </figure>
-    </div>
-
-    <h3>Chrome or Brave on Android</h3>
-    <p class="hint">Bookmark, then three dots next to the bookmark, then Edit. If Android removes the <code>javascript:</code> part when you paste, make the bookmark in Chrome on a computer that is signed in to the same Google account. It syncs to the phone.</p>
-    <p class="hint">Written guide with screenshots: <a href="https://www.labnol.org/software/google-chrome-bookmarklets/27894" target="_blank" rel="noopener">How to use bookmarklets in Chrome for mobile</a>.</p>
-
-    <h3>Safari on iPhone or iPad</h3>
-    <p class="hint">Bookmark the page, open Bookmarks, tap Edit, tap the bookmark, and replace the address. These videos show exactly that:</p>
-    <div class="video"><iframe src="https://www.youtube-nocookie.com/embed/_HzJZJbJ5tI" title="How to add a javascript bookmarklet to iPad Safari" loading="lazy" allowfullscreen></iframe></div>
-    <div class="video"><iframe src="https://www.youtube-nocookie.com/embed/BG9TXlJ5pts" title="How to install bookmarklets on iPad or iPhone" loading="lazy" allowfullscreen></iframe></div>
-
-    <h3>On a computer</h3>
-    <p>Show the bookmarks bar (Ctrl+Shift+B, or Cmd+Shift+B on a Mac), then drag this button onto it: <a id="drag" class="btn drag" href="#">LM</a></p>
+  <section>
+    <h2>Need help or want your own copy?</h2>
+    <p><a href="help.html">Troubleshooting</a> covers the LM button, "Check game now" and the Diagnostics panel. <a href="host.html">Host your own</a> explains the free Cloudflare relay and GitHub Pages setup, with the source code on <a data-repo href="#">GitHub</a>.</p>
   </section>
 
-  <section id="play">
-    <h2>Step 2: play <span class="tag">one tap per game</span></h2>
-    <ol class="steps">
-      <li>Open <b>www.geoguessr.com</b> in the browser, log in, and open a Learnable Meta map, for example <a href="https://www.geoguessr.com/maps/66fda352ee1c8ee4735e1aa8" target="_blank" rel="noopener">A Learnable Meta World - Basics</a>. Press <b>Play</b>.</li>
-      <li>When the round has loaded, tap the address bar, type <b>LM</b>, and tap the bookmark in the suggestions. In Safari you can also open it from the bookmarks menu.</li>
-      <li>A message says "Loading Learnable Meta..." and then "Learnable Meta loaded". A round <b>LM</b> button appears bottom right.</li>
-      <li>Make your guess. The Learnable Meta explanation appears on the result screen, as it does on a computer.</li>
-    </ol>
-    <div class="row">
-      <figure class="phone">
-        <img src="img/map-play.png" alt="A Learnable Meta map page on GeoGuessr with the Play button" loading="lazy">
-        <figcaption>Open the map and press Play.</figcaption>
-      </figure>
-      <figure class="phone">
-        <img src="img/lm-button.png" alt="GeoGuessr with the Learnable Meta loaded message and the LM button" loading="lazy">
-        <figcaption>After tapping the bookmark: loaded message and LM button.</figcaption>
-      </figure>
-      <figure class="phone">
-        <img src="img/meta-window.png" alt="GeoGuessr result screen with the Learnable Meta explanation window" loading="lazy">
-        <figcaption>After a guess: the meta explanation on the result screen.</figcaption>
-      </figure>
-    </div>
-    <p class="hint">Tap the bookmark again after any full page reload, for example when you open GeoGuessr fresh or pull down to refresh. Going from round to round or into the next game does not reload the page, so one tap normally lasts a whole session. Phones are cramped; a tablet or the browser's "Desktop site" option gives the window more room.</p>
-  </section>
-
-  <section id="shortcut">
-    <h2>iPhone and iPad: two taps from the Share menu <span class="tag">optional</span></h2>
-    <p class="hint">Safari only. Set up once in the Shortcuts app. Afterwards, on geoguessr.com, it is Share, then Learnable Meta.</p>
-    <ol class="steps">
-      <li>Open the Shortcuts app, tap <b>+</b>, tap <b>Add Action</b>, search for <b>Run JavaScript on Web Page</b> and add it.</li>
-      <li>Delete the example code in the action and paste this: <button id="copyjs" class="btn secondary">Copy shortcut code</button> <span id="copiedjs" class="ok"></span></li>
-      <li>Tap the info icon at the bottom, turn on <b>Show in Share Sheet</b>, and name the shortcut <b>Learnable Meta</b>. Done.</li>
-    </ol>
-    <details><summary>Show the shortcut code</summary><textarea id="js" readonly></textarea></details>
-    <p class="hint">Apple's own guide to this action: <a href="https://support.apple.com/guide/shortcuts/intro-to-the-run-javascript-on-webpage-action-apd218e2187d/ios" target="_blank" rel="noopener">Run JavaScript on Webpage in Shortcuts</a>.</p>
-  </section>
-
-  <section id="help">
-    <h2>Troubleshooting</h2>
-    <ul>
-      <li><b>"Open geoguessr.com first"</b>: you tapped the bookmark on another site. Open the game first.</li>
-      <li><b>Nothing happens when tapping the bookmark</b>: on Android you must start it from the address bar, not from the bookmarks list. Type LM and tap the suggestion.</li>
-      <li><b>Loaded, but no meta after a guess</b>: tap the round LM button and choose <b>Check game now</b>. If it still does not show, choose <b>Diagnostics</b>, tap Copy, and send the text to the person who runs the relay.</li>
-      <li><b>Map not supported</b>: the script only shows metas on Learnable Meta maps. Pick one from <a href="https://learnablemeta.com/maps" target="_blank" rel="noopener">learnablemeta.com/maps</a>.</li>
-    </ul>
-    <div class="row">
-      <figure class="phone">
-        <img src="img/diagnostics.png" alt="The diagnostics panel opened from the LM button" loading="lazy">
-        <figcaption>The LM button menu and its Diagnostics panel.</figcaption>
-      </figure>
-    </div>
-  </section>
-
-  <section id="host">
-    <h2>Host your own copy <span class="tag">for tinkerers</span></h2>
-    <p>Everything is open source: <a id="repo-link" href="https://github.com/Lerbernard/learnable-meta-mobile" target="_blank" rel="noopener">the GitHub repository</a>. The relay is a free Cloudflare Worker; this website is GitHub Pages. To run your own:</p>
-    <ol class="steps">
-      <li><b>Fork the repository</b> on GitHub (the Fork button, top right).</li>
-      <li><b>Create the relay.</b> At <a href="https://dash.cloudflare.com" target="_blank" rel="noopener">dash.cloudflare.com</a> go to Workers &amp; Pages, then Create, then Start with Hello World, name it <code>lm-relay</code>, Deploy. Then Edit code, delete everything, paste the contents of <code>worker.js</code> from your fork, and Deploy again. Your relay address looks like <code>https://lm-relay.yourname.workers.dev</code>.</li>
-      <li><b>Point the site at your relay.</b> In your fork, edit <code>docs/index.html</code> and change the <code>lm-relay</code> meta tag near the top to your relay address. Also change <code>SITE_URL</code> at the top of <code>worker.template.js</code> to your Pages address and rebuild with <code>build.sh</code>, or simply edit the same line in <code>worker.js</code>.</li>
-      <li><b>Turn on GitHub Pages.</b> In the fork, Settings, then Pages, set Source to "Deploy from a branch", branch <code>main</code>, folder <code>/docs</code>. Your guide appears at <code>https://yourname.github.io/learnable-meta-mobile/</code>.</li>
-      <li><b>Optional, deploy from GitHub automatically.</b> In Cloudflare, Workers &amp; Pages, Create, then "Import a repository" and pick your fork. Cloudflare then redeploys the worker on every push, using <code>wrangler.jsonc</code>.</li>
-    </ol>
-    <figure class="wide">
-      <img src="img/cloudflare-editor.png" alt="Cloudflare's online code editor with worker.js pasted in" loading="lazy">
-      <figcaption>Cloudflare's editor with worker.js pasted in. The "Error 1031" preview on the right is a quirk of the editor's preview pane and can be ignored; use Visit instead.</figcaption>
-    </figure>
-    <p class="hint">Video walkthrough of creating and deploying a Worker:</p>
-    <div class="video"><iframe src="https://www.youtube-nocookie.com/embed/1gX0uavithA" title="Cloudflare Workers Tutorial - Intro and Deployment" loading="lazy" allowfullscreen></iframe></div>
-    <p class="hint">The relay only answers pages on geoguessr.com, forwards no personal tokens, and stores nothing. Cloudflare's free plan allows 100,000 requests a day.</p>
-  </section>
-
-  <footer>
-    Not affiliated with GeoGuessr or Learnable Meta. The script itself is by the <a href="https://learnablemeta.com" target="_blank" rel="noopener">Learnable Meta</a> team and is loaded unmodified from their official address.
-  </footer>
+  <footer>Not affiliated with GeoGuessr or Learnable Meta. The script itself is by the <a href="https://learnablemeta.com" target="_blank" rel="noopener">Learnable Meta</a> team and is loaded unmodified from their official address.</footer>
 </main>
-<script>
-(function () {
-  function meta(name) { var m = document.querySelector('meta[name="' + name + '"]'); return m ? m.getAttribute('content') : ''; }
-  var relay = (meta('lm-relay') || location.origin).replace(/\/+$/, '');
-  var bookmarklet = "javascript:(function(){var s=document.createElement('script');s.src='" + relay + "/lm-mobile.js?'+Date.now();document.head.appendChild(s);})();";
-  var shortcut = "var s=document.createElement('script');s.src='" + relay + "/lm-mobile.js?'+Date.now();document.head.appendChild(s);completion();";
-
-  var drag = document.getElementById('drag');
-  drag.href = bookmarklet;
-  drag.addEventListener('click', function (e) {
-    e.preventDefault();
-    alert('Drag this button to the bookmarks bar instead of clicking it. On a phone, use the Copy bookmark link button.');
-  });
-  document.getElementById('link').value = bookmarklet;
-  document.getElementById('js').value = shortcut;
-  var repo = meta('lm-repo'); if (repo) document.getElementById('repo-link').href = repo;
-
-  function copier(btnId, text, okId) {
-    document.getElementById(btnId).addEventListener('click', function () {
-      var out = document.getElementById(okId);
-      var done = function () { out.textContent = 'Copied'; };
-      var fail = function () { out.textContent = 'Could not copy, open the box below'; };
-      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, fail);
-      else fail();
-    });
-  }
-  copier('copy', bookmarklet, 'copied');
-  copier('copyjs', shortcut, 'copiedjs');
-
-  fetch(relay + '/lm-mobile.js', { cache: 'no-store' })
-    .then(function (r) { return r.ok ? r.text() : Promise.reject(new Error('HTTP ' + r.status)); })
-    .then(function (t) {
-      var m = t.match(/LOADER_VERSION = '([^']+)'/);
-      document.getElementById('status').innerHTML = '<span class="ok">Relay is online</span> at ' + relay + (m ? ', loader ' + m[1] : '');
-    })
-    .catch(function (e) {
-      document.getElementById('status').innerHTML = '<span class="warn">Relay check failed: ' + e.message + '</span> (' + relay + ')';
-    });
-})();
-</script>
+<script src="config.js"></script>
+<script src="site.js"></script>
 </body>
 </html>
