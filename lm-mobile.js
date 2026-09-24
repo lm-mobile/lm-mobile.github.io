@@ -29,7 +29,7 @@
   var API_ORIGIN = 'https://learnablemeta.com';
   var SCRIPT_URL = 'https://userscript.learnablemeta.com/geometa.user.js';
   var STORE_PREFIX = 'lmMobile:';
-  var LOADER_VERSION = '1.2.0';
+  var LOADER_VERSION = '1.3.0';
   var GAME_API = /geoguessr\.com\/api\/v3\/(games|challenges)(\/|$)/;
 
   if (!/(^|\.)geoguessr\.com$/.test(location.hostname)) {
@@ -440,7 +440,13 @@
       state.userscriptVersion = window.GM_info.script.version;
       ensureMenuButton();
       watchFrameworkEvents();
-      notify('Learnable Meta ' + window.GM_info.script.version + ' loaded');
+      var lastLoader = '';
+      try { lastLoader = localStorage.getItem(STORE_PREFIX + 'loaderVersion') || ''; localStorage.setItem(STORE_PREFIX + 'loaderVersion', LOADER_VERSION); } catch (e) { /* ignore */ }
+      if (lastLoader && lastLoader !== LOADER_VERSION) {
+        notify('Learnable Meta ' + window.GM_info.script.version + ' loaded. The loader was updated to ' + LOADER_VERSION + '. See What is new on the guide.', 6000);
+      } else {
+        notify('Learnable Meta ' + window.GM_info.script.version + ' loaded');
+      }
       setTimeout(function () { syncGame('start'); }, 800);
     });
   }).catch(function (err) {
