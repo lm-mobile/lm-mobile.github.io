@@ -59,7 +59,7 @@ const LOADER = String.raw`
   var API_ORIGIN = 'https://learnablemeta.com';
   var SCRIPT_URL = 'https://userscript.learnablemeta.com/geometa.user.js';
   var STORE_PREFIX = 'lmMobile:';
-  var LOADER_VERSION = '1.3.0';
+  var LOADER_VERSION = '1.4.0';
   var GAME_API = /geoguessr\.com\/api\/v3\/(games|challenges)(\/|$)/;
 
   if (!/(^|\.)geoguessr\.com$/.test(location.hostname)) {
@@ -111,15 +111,72 @@ const LOADER = String.raw`
   }
 
   var menuPanel = null;
+  var BTN = 44, EDGE = 12, HOLD_MS = 300;
+  var SNAP_EASE = 'left .32s cubic-bezier(.2,.8,.2,1), top .32s cubic-bezier(.2,.8,.2,1), transform .2s ease, opacity .2s ease';
+
+  function btnPrefs() {
+    var p = { side: 'right', y: 0.9 };
+    try { p = Object.assign(p, JSON.parse(localStorage.getItem(STORE_PREFIX + 'btn') || '{}')); } catch (e) { /* ignore */ }
+    return p;
+  }
+  function saveBtnPrefs(p) { try { localStorage.setItem(STORE_PREFIX + 'btn', JSON.stringify(p)); } catch (e) { /* ignore */ } }
+
+  function placeButton(btn, animate) {
+    var p = btnPrefs();
+    var top = Math.min(Math.max(p.y * window.innerHeight - BTN / 2, EDGE), window.innerHeight - BTN - EDGE);
+    var left = p.side === 'left' ? EDGE : window.innerWidth - BTN - EDGE;
+    btn.style.transition = animate ? SNAP_EASE : 'none';
+    btn.style.left = left + 'px';
+    btn.style.top = top + 'px';
+  }
+
   function ensureMenuButton() {
     if (document.getElementById('lm-mobile-menu-btn')) return;
     var btn = el('button',
-      'position:fixed;right:12px;bottom:12px;z-index:2147483646;width:44px;height:44px;border-radius:50%;' +
+      'position:fixed;z-index:2147483646;width:' + BTN + 'px;height:' + BTN + 'px;border-radius:50%;' +
       'border:0;background:#1c1836;color:#fff;font:700 13px system-ui,sans-serif;box-shadow:0 2px 8px rgba(0,0,0,.4);' +
-      'opacity:.85;cursor:pointer', 'LM');
+      'opacity:.85;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none', 'LM');
     btn.id = 'lm-mobile-menu-btn';
-    btn.title = 'Learnable Meta menu';
-    btn.addEventListener('click', toggleMenu);
+    btn.title = 'Learnable Meta menu. Hold and drag to move.';
+    placeButton(btn, false);
+
+    var holdTimer = null, dragging = false, moved = false, startX = 0, startY = 0, suppressClick = false;
+    function endDrag() {
+      clearTimeout(holdTimer); holdTimer = null;
+      if (!dragging) return;
+      dragging = false;
+      var r = btn.getBoundingClientRect();
+      var p = { side: (r.left + BTN / 2) < window.innerWidth / 2 ? 'left' : 'right', y: (r.top + BTN / 2) / window.innerHeight };
+      saveBtnPrefs(p);
+      btn.style.opacity = '.85'; btn.style.transform = '';
+      placeButton(btn, true);
+      if (menuPanel) { menuPanel.remove(); menuPanel = null; }
+      suppressClick = true; setTimeout(function () { suppressClick = false; }, 400);
+    }
+    btn.addEventListener('pointerdown', function (e) {
+      startX = e.clientX; startY = e.clientY; moved = false;
+      try { btn.setPointerCapture(e.pointerId); } catch (err) { /* ignore */ }
+      holdTimer = setTimeout(function () {
+        dragging = true; btn.style.transition = 'transform .2s ease, opacity .2s ease'; btn.style.opacity = '1'; btn.style.transform = 'scale(1.15)';
+        if (navigator.vibrate) { try { navigator.vibrate(15); } catch (err) { /* ignore */ } }
+        if (menuPanel) { menuPanel.remove(); menuPanel = null; }
+      }, HOLD_MS);
+    });
+    btn.addEventListener('pointermove', function (e) {
+      if (!dragging) {
+        if (holdTimer && (Math.abs(e.clientX - startX) > 8 || Math.abs(e.clientY - startY) > 8)) { clearTimeout(holdTimer); holdTimer = null; }
+        return;
+      }
+      moved = true; e.preventDefault();
+      btn.style.left = Math.min(Math.max(e.clientX - BTN / 2, 0), window.innerWidth - BTN) + 'px';
+      btn.style.top = Math.min(Math.max(e.clientY - BTN / 2, 0), window.innerHeight - BTN) + 'px';
+    });
+    btn.addEventListener('pointerup', endDrag);
+    btn.addEventListener('pointercancel', endDrag);
+    btn.addEventListener('lostpointercapture', endDrag);
+    btn.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+    btn.addEventListener('click', function (e) { if (suppressClick || moved) { e.preventDefault(); moved = false; return; } toggleMenu(); });
+    window.addEventListener('resize', function () { placeButton(btn, false); });
     (document.body || document.documentElement).appendChild(btn);
   }
 
@@ -133,10 +190,16 @@ const LOADER = String.raw`
 
   function toggleMenu() {
     if (menuPanel) { menuPanel.remove(); menuPanel = null; return; }
+    var btnEl = document.getElementById('lm-mobile-menu-btn');
+    var r = btnEl ? btnEl.getBoundingClientRect() : { left: window.innerWidth - 56, top: window.innerHeight - 56, bottom: window.innerHeight - 12, right: window.innerWidth - 12 };
+    var horiz = (r.left + BTN / 2) < window.innerWidth / 2 ? 'left:12px;' : 'right:12px;';
+    var vert = (r.top + BTN / 2) > window.innerHeight / 2 ? 'bottom:' + Math.round(window.innerHeight - r.top + 8) + 'px;' : 'top:' + Math.round(r.bottom + 8) + 'px;';
     menuPanel = el('div',
-      'position:fixed;right:12px;bottom:64px;z-index:2147483646;min-width:220px;max-width:90vw;padding:8px;border-radius:10px;' +
+      'position:fixed;' + horiz + vert + 'z-index:2147483646;min-width:220px;max-width:90vw;max-height:70vh;overflow:auto;padding:8px;border-radius:10px;' +
       'background:#1c1836;color:#fff;font:14px system-ui,sans-serif;box-shadow:0 4px 16px rgba(0,0,0,.5)');
+    menuPanel.id = 'lm-mobile-menu';
     menuPanel.appendChild(el('div', 'padding:4px 8px 8px;font-weight:700;opacity:.8', 'Learnable Meta (mobile loader ' + LOADER_VERSION + ')'));
+    menuPanel.appendChild(el('div', 'padding:0 8px 8px;font-size:12px;opacity:.65', 'Hold the LM button and drag to move it.'));
     // The script's own menu commands (Reset Meta Window Layout) are kept in state.menu but not shown.
     menuPanel.appendChild(menuRow(prefs.hidden ? 'Show clue window' : 'Hide clue window', '#fff', function () { toggleMenu(); toggleHidden(); }));
     menuPanel.appendChild(menuRow('Clue window size: ' + prefs.size + ' (tap to change)', '#fff', function () { toggleMenu(); cycleSize(); }));
