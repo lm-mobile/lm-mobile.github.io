@@ -29,7 +29,7 @@
   var API_ORIGIN = 'https://learnablemeta.com';
   var SCRIPT_URL = 'https://userscript.learnablemeta.com/geometa.user.js';
   var STORE_PREFIX = 'lmMobile:';
-  var LOADER_VERSION = '1.4.0';
+  var LOADER_VERSION = '1.5.0';
   var GAME_API = /geoguessr\.com\/api\/v3\/(games|challenges)(\/|$)/;
 
   if (!/(^|\.)geoguessr\.com$/.test(location.hostname)) {
@@ -363,14 +363,38 @@
   }
   state.feedGame = feedGame;
 
+  // GeoGuessr has read game responses with .json() and, since late September 2026, with .text().
+  // Hook both, so whichever it uses hands us the game data without any extra request.
+  var lastHookFeed = 0;
+  function noteGameResponse(url) {
+    state.diag.jsonHookHits += 1;
+    state.diag.lastGameResponse = url;
+    lastHookFeed = Date.now();
+  }
+  function isGameUrl(url) { return GAME_API.test(url) && url.indexOf('daily-challenge') === -1; }
+
   var origJson = Response.prototype.json;
   Response.prototype.json = function () {
     var promise = origJson.apply(this, arguments);
     var url = this.url || '';
-    if (!ownResponses.has(this) && GAME_API.test(url) && url.indexOf('daily-challenge') === -1) {
-      state.diag.jsonHookHits += 1;
-      state.diag.lastGameResponse = url;
+    if (!ownResponses.has(this) && isGameUrl(url)) {
+      noteGameResponse(url);
       promise.then(function (data) { feedGame(data, 'response'); }, function () {});
+    }
+    return promise;
+  };
+
+  var origText = Response.prototype.text;
+  Response.prototype.text = function () {
+    var promise = origText.apply(this, arguments);
+    var url = this.url || '';
+    if (!ownResponses.has(this) && isGameUrl(url)) {
+      noteGameResponse(url);
+      promise.then(function (body) {
+        var data = null;
+        try { data = JSON.parse(body); } catch (e) { return; }
+        feedGame(data, 'response');
+      }, function () {});
     }
     return promise;
   };
@@ -399,6 +423,8 @@
     var token = currentGameToken();
     if (!token) { state.diag.lastSync = reason + ': no game on this page'; return; }
     state.diag.lastSync = reason + ': fetching game ' + token;
+    ownRequests.push(performance.now());
+    if (ownRequests.length > 10) ownRequests.shift();
     nativeFetch.call(window, 'https://www.geoguessr.com/api/v3/games/' + token, { credentials: 'include', cache: 'no-store' })
       .then(function (res) {
         ownResponses.add(res);
@@ -420,6 +446,35 @@
       });
     });
   }
+
+  // Fallback that does not depend on how GeoGuessr reads the body: when the browser's
+  // network timeline shows a game request that the hooks above did not catch, fetch the
+  // game state ourselves.
+  var ownRequests = [];
+  var fallbackTimer = null;
+  var lastNetworkSync = 0;
+  function watchNetworkTimeline() {
+    if (typeof PerformanceObserver !== 'function') return;
+    try {
+      new PerformanceObserver(function (list) {
+        list.getEntries().forEach(function (entry) {
+          var url = entry.name || '';
+          if (!/geoguessr\.com\/api\/v3\/games\/[^\/?#]+/.test(url)) return;
+          for (var i = 0; i < ownRequests.length; i++) {
+            if (entry.startTime >= ownRequests[i] - 5 && entry.startTime <= ownRequests[i] + 8000 && url.indexOf('client=') === -1) { ownRequests.splice(i, 1); return; }
+          }
+          clearTimeout(fallbackTimer);
+          fallbackTimer = setTimeout(function () {
+            if (Date.now() - lastHookFeed < 1500) return;
+            if (Date.now() - lastNetworkSync < 3000) return;
+            lastNetworkSync = Date.now();
+            syncGame('network');
+          }, 700);
+        });
+      }).observe({ type: 'resource', buffered: false });
+    } catch (e) { /* ignore */ }
+  }
+  watchNetworkTimeline();
 
   var urlSyncTimer = null;
   function onUrlChange() {
