@@ -73,6 +73,15 @@ token, so everything a player uses works; only the map-creator upload feature is
 unavailable. Set it to `true` only on a relay that is yours alone. Cloudflare's
 free plan allows 100,000 requests per day.
 
+## Health check
+
+`/health` on the relay runs the checks that need no GeoGuessr login: official
+script reachable, script asks only for functions the loader provides, event
+framework unchanged, Learnable Meta API answering, GeoGuessr still allowing
+injected scripts. It answers 200 with `OK` or 503 with `PROBLEM` and the
+failing check names. Point an uptime monitor at it. Results are cached for 30
+minutes; add `?fresh=1` to force a run.
+
 ## Troubleshooting
 
 Tap the round **LM** button on the GeoGuessr page:
